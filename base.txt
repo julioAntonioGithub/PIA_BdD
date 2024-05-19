@@ -1,0 +1,125 @@
+CREATE DATABASE ESCUELA
+GO
+
+--
+USE ESCUELA
+--
+
+-- Tabla para almacenar información de alumnos
+CREATE TABLE Alumnos (
+    Matricula INT PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Apellidos VARCHAR(50),
+    Correo VARCHAR(100),
+    Celular VARCHAR(15),
+    IdCarrera INT,
+    Semestre INT,
+    Grupo VARCHAR(10),
+    FOREIGN KEY (IdCarrera) REFERENCES Carreras(IdCarrera)
+);
+
+-- Tabla para almacenar información de maestros
+CREATE TABLE Maestros (
+    NumEmpleado INT PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Apellidos VARCHAR(50),
+    Correo VARCHAR(100),
+    Celular VARCHAR(15),
+    IdGrupo INT,
+    FOREIGN KEY (IdGrupo) REFERENCES Grupos(IdGrupo)
+);
+
+-- Tabla para almacenar información de carreras
+CREATE TABLE Carreras (
+    IdCarrera INT PRIMARY KEY,
+    Nombre VARCHAR(50)
+);
+
+-- Tabla para almacenar información de grupos
+CREATE TABLE Grupos (
+    IdGrupo INT PRIMARY KEY,
+    Nombre VARCHAR(50)
+);
+
+
+--ahora pondre los StoredProdedure--
+--mostrar alunos por matricula--
+
+USE [ESCUELA]
+GO
+/****** Object:  StoredProcedure [dbo].[MostrarAlumnoPorMatricula]    Script Date: 18/05/2024 06:43:46 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[MostrarAlumnoPorMatricula]
+    @Matricula INT
+AS
+BEGIN
+    SELECT * FROM Alumnos
+    WHERE Matricula = @Matricula;
+END;
+
+--Mostrar alumnos--
+
+USE [ESCUELA]
+GO
+/****** Object:  StoredProcedure [dbo].[MostrarAlumnos]    Script Date: 18/05/2024 06:45:37 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[MostrarAlumnos]
+AS
+BEGIN
+    SELECT * FROM Alumnos;
+END;
+
+--Mostrar alumnos por carrera y semestre--
+USE [ESCUELA]
+GO
+/****** Object:  StoredProcedure [dbo].[MostrarAlumnosPorCarreraYSemestre]    Script Date: 18/05/2024 06:46:12 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[MostrarAlumnosPorCarreraYSemestre]
+    @IdCarrera INT,
+    @Semestre INT
+AS
+BEGIN
+    SELECT * FROM Alumnos
+    WHERE IdCarrera = @IdCarrera AND Semestre = @Semestre;
+END;
+
+--Mostrar grupo Id--
+
+USE [ESCUELA]
+GO
+/****** Object:  StoredProcedure [dbo].[MostrarGrupoPorId]    Script Date: 18/05/2024 06:46:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[MostrarGrupoPorId]
+    @IdGrupo INT
+AS
+BEGIN
+    SELECT * FROM Grupos
+    WHERE IdGrupo = @IdGrupo;
+END;
+
+
+--Mostrar grupos--
+USE [ESCUELA]
+GO
+/****** Object:  StoredProcedure [dbo].[MostrarGrupos]    Script Date: 18/05/2024 06:47:17 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[MostrarGrupos]
+AS
+BEGIN
+    SELECT * FROM Grupos;
+END;
